@@ -67,7 +67,5 @@ target/
 
 qr.png
 /*.jpg
-*.ini
 *.un~
-cookie.txt
 
