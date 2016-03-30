@@ -1,0 +1,7 @@
+name: baidutiebasign
+version: 1
+
+cron:
+- description: baidutiebasign
+  url: /
+  schedule: "0 0 * * *"
