@@ -5,3 +5,6 @@ cron:
 - description: baidutiebasign
   url: /
   schedule: "0 0 * * *"
+- description: confirm
+  url: /&cron=1
+  schedule: "0 1 * * *"
