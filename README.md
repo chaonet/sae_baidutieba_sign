@@ -4,7 +4,7 @@
 
 之前做了一个[百度贴吧自动签到](https://github.com/chaonet/baidu_tieba_auto_sign)，但每天手动重复运行也麻烦，于是想到用`SAE`。
 
-部署到 SAE，使用`计划任务服务`，每天 0 点自动运行，可以参考[Cron](http://www.sinacloud.com/doc/sae/python/cron.html)
+部署到 SAE，使用`计划任务服务`，每天 0 点和 1 点 自动运行，可以参考[Cron](http://www.sinacloud.com/doc/sae/python/cron.html)
 
 ## 开发环境
 
@@ -90,6 +90,8 @@ $ git push sae master:1
 于是，考虑先本地获取并保存`cookie`到应用目录，然后在线上环境加载`cookie`。
 
 成功
+
+在 0 点执行，会出现部分贴吧签到失败的情况，于是添加一个 1 点执行的任务，再次执行签到，避免遗漏
 
 学了一遍 python 爬虫 的知识
 
