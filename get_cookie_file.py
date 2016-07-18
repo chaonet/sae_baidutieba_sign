@@ -6,7 +6,7 @@ import os, sys
 import urllib
 import urllib2
 import cookielib
-import re
+import rea
 import hashlib
 import json
 import threading
@@ -75,8 +75,9 @@ def get_cookie_and_bduss():
     success = False
     filename = 'cookie.txt'
     cookie = cookielib.MozillaCookieJar(filename)
+    n = 1
 
-    while not success:
+    while not success and n < 2:
         # cookie = cookielib.CookieJar()
         # cookie = cookielib.MozillaCookieJar()
         opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cookie))
@@ -86,14 +87,14 @@ def get_cookie_and_bduss():
         print("Loading...正在获取token:")
         #try:
         data = opener.open(INDEX_URL).read() # 正常获取
-        print data, 0
+        # print data, 0
         data = opener.open(TOKEN_URL).read() # 获取的是错误页面`http://www.baidu.com/search/error.html`
-        print data,1
+        # print data,1
         
         print type(data)
         "<type 'str'>"
         data = eval(data)
-        print data,2
+        # print data,2
         print data["data"]["token"]
         TOKEN = data["data"]["token"]
         
@@ -120,7 +121,7 @@ def get_cookie_and_bduss():
         # result = json.loads(opener.open("http://tieba.baidu.com/f/user/json_userinfo").read().decode("ISO-8859-1"))
         cookiesToCheck_dir = {'BDUSS':'', 'PTOKEN':'', 'STOKEN':'', 'SAVEUSERID':''}
         cookiesToCheck_list = ['BDUSS', 'PTOKEN', 'STOKEN', 'SAVEUSERID']
-        print cookie, 4
+        # print cookie, 4
         success = True
         for ck in cookiesToCheck_list:
             for ck_1 in cookie:
@@ -131,14 +132,22 @@ def get_cookie_and_bduss():
                 success = False
 
 
-    print user + "登录成功!"
-    cookie.save(ignore_discard=True, ignore_expires=True)
         # print cookie
     for ck in cookie:
         if ck.name == 'BDUSS':
             BDUSS = ck.value 
             # print BDUSS
             cookie_get = cookie
+
+    if not cookie_get or not BDUSS:
+        success = False
+    
+    if success:
+        print user + "登录成功!"
+        cookie.save(ignore_discard=True, ignore_expires=True)
+    else:
+        print user + "登录失败，检查用户名和密码!"
+        n += 1
     print cookie_get
     print BDUSS
     # return cookie,BDUSS
